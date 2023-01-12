@@ -480,6 +480,7 @@ header {
 .product-text {
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 /* Cart */
