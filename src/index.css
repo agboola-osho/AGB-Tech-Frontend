@@ -835,36 +835,9 @@ input::-webkit-inner-spin-button {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-/* body::before {
-    content: "XS";
+
+@media (max-width: 400px) {
+  .product-text {
+    padding-left: 30px;
   }
-  
-  @media (min-width: 576px) {
-    body::before {
-      content: "SM";
-    }
-  }
-  
-  @media (min-width: 768px) {
-    body::before {
-      content: "MD";
-    }
-  }
-  
-  @media (min-width: 992px) {
-    body::before {
-      content: "LG";
-    }
-  }
-  
-  @media (min-width: 1200px) {
-    body::before {
-      content: "XL";
-    }
-  }
-  
-  @media (min-width: 1400px) {
-    body::before {
-      content: "XXL";
-    }
-  } */
+}
