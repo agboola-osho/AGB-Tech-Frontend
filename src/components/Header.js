@@ -145,12 +145,19 @@ const Header = ({ length }) => {
             </button>
           </form>
         </div>
-        <button className='icon cart-icon'>
-          <Link to='Cart' className='icon'>
-            <Icon icon='fa6-solid:bag-shopping' inline={true} />
-            <span className='cart-length'>{length}</span>
-          </Link>
-        </button>
+         <div>
+          <button className='icon'>
+            <Link to='user' className='icon'>
+              <Icon icon='fa6-solid:user' inline={true} />
+            </Link>
+          </button>
+          <button className='icon cart-icon'>
+            <Link to='Cart' className='icon'>
+              <Icon icon='fa6-solid:bag-shopping' inline={true} />
+              <span className='cart-length'>{length}</span>
+            </Link>
+          </button>
+        </div>
       </div>
       <form
         className='small-search'
