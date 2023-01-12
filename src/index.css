@@ -14,6 +14,8 @@ body {
   width: 100%;
   background-color: #f6f9fc;
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* Header */
