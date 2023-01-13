@@ -1,8 +1,8 @@
 const Spinner = () => {
   return (
-    <div className='position-relative spinner'>
+    <div className='spinner'>
       <div
-        className='spinner-border spinner-border-lg text-danger position-absolute top-50 start-50 translate-middle'
+        className='spinner-border spinner-border-xxl text-danger '
         role='status'
       >
         <span className='visually-hidden'>Loading...</span>
