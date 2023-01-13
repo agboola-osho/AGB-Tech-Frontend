@@ -68,6 +68,7 @@ header {
   align-items: center;
   width: 61vw;
   height: 8vh;
+  position: relative;
   padding: 20px;
 }
 
