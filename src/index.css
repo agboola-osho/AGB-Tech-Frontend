@@ -86,11 +86,15 @@ header {
 }
 
 .search-btn {
-  border-radius: 12px;
+ border-radius: 50px;
   margin-left: 0.8vw;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   width: 5vw;
   border: rgb(191, 188, 188);
-  height: 6vh;
+  height: 100%;
 }
 
 .icon {
