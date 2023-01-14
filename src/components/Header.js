@@ -127,6 +127,7 @@ const Header = ({ length }) => {
               e.preventDefault()
               navigate("/searchResults")
             }}
+            className='search-form'
           >
             <label htmlFor='search' className='d-none'>
               Search
@@ -141,11 +142,11 @@ const Header = ({ length }) => {
               onChange={(e) => setSearch(e.target.value)}
             />
             <button className='search-btn'>
-              <Icon icon='fa:search' className='search-icon' inline={true} />
+              <Icon icon='fa:search' inline={true} />
             </button>
           </form>
         </div>
-         <div>
+        <div>
           <button className='icon'>
             <Link to='user' className='icon'>
               <Icon icon='fa6-solid:user' inline={true} />
@@ -159,28 +160,31 @@ const Header = ({ length }) => {
           </button>
         </div>
       </div>
-      <form
-        className='small-search'
-        onSubmit={(e) => {
-          e.preventDefault()
-          navigate("/searchResults")
-        }}
-      >
-        <input
-          type='text'
-          placeholder='Search'
-          aria-label='Search'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button
-          className='btn btn-outline-secondary'
-          type='submit'
-          id='button-addon2'
+      <div className='small-search'>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            navigate("/searchResults")
+          }}
+          className='search-form'
         >
+          <label htmlFor='small-search' className='d-none'>
+            Search
+          </label>
           <Icon icon='fa:search' className='search-icon' inline={true} />
-        </button>
-      </form>
+          <input
+            type='text'
+            name='search'
+            id='small-search'
+            placeholder='Search'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className='search-btn'>
+            <Icon icon='fa:search' inline={true} />
+          </button>
+        </form>
+      </div>
     </>
   )
 }

@@ -1,6 +1,5 @@
-import Men from "../../assets/MenSample.jpg"
-import Women from "../../assets/WomenSample.jpg"
-import Jewelry from "../../assets/Jewelry.jpg"
+import iPad from "../../assets/iPad.jpg"
+import iPhone from "../../assets/iPhone.png"
 import { Link } from "react-router-dom"
 
 const Carousel = () => {
@@ -21,21 +20,15 @@ const Carousel = () => {
           data-bs-slide-to='1'
           aria-label='Slide 2'
         ></button>
-        <button
-          type='button'
-          data-bs-target='#Carousel'
-          data-bs-slide-to='2'
-          aria-label='Slide 3'
-        ></button>
       </div>
       <div className='carousel-inner'>
         <div className='carousel-item home-carousel-item active'>
-          <img src={Men} className='d-block' alt='Men' />
+          <img src={iPad} className='d-block' id='iPad' alt='iPad' />
           <div className='carousel-caption home-carousel-caption d-block'>
             <h5>50% Off Your First Purchase</h5>
             <div className='slider-btn'>
               <button className='btn btn-danger'>
-                <Link className='link' to="Categories/Men'sClothing">
+                <Link className='link' to='Categories/Tablets'>
                   Vist Collection
                 </Link>
               </button>
@@ -43,30 +36,12 @@ const Carousel = () => {
           </div>
         </div>
         <div className='carousel-item home-carousel-item'>
-          <img src={Women} className='d-block' alt='Women' />
+          <img src={iPhone} className='d-block' id='iPhone' alt='iPhone' />
           <div className='carousel-caption home-carousel-caption d-block'>
             <h5>50% Off Your First Purchase</h5>
             <div className='slider-btn'>
               <button className='btn btn-danger'>
-                <Link className='link' to="Categories/Women'sClothing">
-                  Vist Collection
-                </Link>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className='carousel-item home-carousel-item'>
-          <img
-            src={Jewelry}
-            id='jewelry'
-            className='d-block'
-            alt='Electronics'
-          />
-          <div className='carousel-caption home-carousel-caption d-block'>
-            <h5>50% Off Your First Purchase</h5>
-            <div className='slider-btn'>
-              <button className='btn btn-danger slider-btn'>
-                <Link className='link' to='Categories/Jewelery'>
+                <Link className='link' to='Categories/Phones'>
                   Vist Collection
                 </Link>
               </button>

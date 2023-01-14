@@ -67,9 +67,9 @@ header {
   border-radius: 50px;
   align-items: center;
   width: 61vw;
-  height: 8vh;
-  position: relative;
+  height: 50px;
   padding: 20px;
+  position: relative;
 }
 
 .search-icon {
@@ -78,8 +78,8 @@ header {
 }
 
 #search {
-  width: 50vw;
-  height: 7vh;
+  width: 100%;
+  height: 100%;
   border: none;
   outline: none;
   font-size: 18px;
@@ -87,15 +87,20 @@ header {
 }
 
 .search-btn {
- border-radius: 50px;
-  margin-left: 0.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 50px;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 5vw;
-  border: rgb(191, 188, 188);
+  color: #fff;
   height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  border: none;
+  background-color: red;
 }
 
 .icon {
@@ -116,28 +121,31 @@ header {
   color: #000;
 }
 
-
-
-.small-search input {
-  border-radius: 16px 0 0 16px;
-  padding: 10px;
-  width: 60vw;
-  height: 9vh;
-}
 .small-search {
+  border: 1px solid rgb(172, 167, 167);
+  border-radius: 50px;
+  height: 50px;
+  position: relative;
   display: none;
-  width: 100%;
-  justify-content: center;
   align-items: center;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding: 10px;
 }
 
-.small-search button {
-  border-radius: 0 16px 16px 0;
-  height: 9vh;
+.search-form {
+  width: 100%;
 }
 
-.input button:hover {
-  background-color: rgb(240, 233, 233);
+
+#small-search {
+  width: 92%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  padding-left: 10px;
+
 }
 
 /* Offcanvas */
@@ -187,8 +195,8 @@ header {
   border: none;
   outline: none;
   width: 100%;
-  text-align: left;
   color: black;
+  text-align: left;
   height: 100%;
 }
 
@@ -200,7 +208,7 @@ header {
 
 /* Home */
 
-#jewelry {
+#iPad {
   width: 50vw;
 }
 .home-carousel-item img {
@@ -485,7 +493,6 @@ header {
 .product-text {
     display: flex;
     flex-direction: column;
-    padding: 10px;
 }
 
 /* Cart */
@@ -795,7 +802,6 @@ input::-webkit-inner-spin-button {
   #search {
     display: none;
   }
-  .input,
   .small-search {
     display: flex;
   }
@@ -813,10 +819,6 @@ input::-webkit-inner-spin-button {
     display: flex;
     align-content: center;
     
-  }
-  .small-search input,
-  .small-search button {
-    height: 7vh;
   }
   .carousel-caption h5 {
     white-space: wrap;
@@ -837,15 +839,56 @@ input::-webkit-inner-spin-button {
   .deals {
     grid-template-columns: repeat(3, 1fr);
   }
+  
+}
+@media (max-width: 992px) {
+  #iPad {
+      width: 100%;
+    }
+  #iPhone {
+    width: 70%;
+  } 
 }
 @media (min-width: 1200px) {
   .deals {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-
 @media (max-width: 400px) {
   .product-text {
     padding-left: 30px;
   }
 }
+/* body::before {
+    content: "XS";
+  }
+  
+  @media (min-width: 576px) {
+    body::before {
+      content: "SM";
+    }
+  }
+  
+  @media (min-width: 768px) {
+    body::before {
+      content: "MD";
+    }
+  }
+  
+  @media (min-width: 992px) {
+    body::before {
+      content: "LG";
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    body::before {
+      content: "XL";
+    }
+  }
+  
+  @media (min-width: 1400px) {
+    body::before {
+      content: "XXL";
+    }
+  } */

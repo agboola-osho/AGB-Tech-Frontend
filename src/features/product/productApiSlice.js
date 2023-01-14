@@ -9,7 +9,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
           return response.status === 200 && !result.isError
         },
       }),
-      providesTags: ["Products"],
+      providesTags: (result, error, arg) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: "Product", id: _id })),
+              { type: "Product", id: "LIST" },
+            ]
+          : [{ type: "Product", id: "LIST" }],
     }),
     getProductById: builder.query({
       query: (id) => ({
@@ -18,6 +24,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
           return response.status === 200 && !result.isError
         },
       }),
+      providesTags: (result, error, arg) => [{ type: "Post", id: arg._id }],
     }),
     getProductsByCategory: builder.query({
       query: (category) => ({
@@ -54,12 +61,12 @@ export const productApiSlice = apiSlice.injectEndpoints({
     createNewProduct: builder.mutation({
       query: (newProduct) => ({
         url: "/products",
-        method: "POST",
+        method: "PRODUCT",
         body: {
           ...newProduct,
         },
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
     updateProduct: builder.mutation({
       query: (Product) => ({
@@ -69,7 +76,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
           ...Product,
         },
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg._id }],
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -79,7 +86,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
           id,
         },
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
   }),
 })
