@@ -79,6 +79,7 @@ const EditProductForm = ({ product }) => {
         images: imageUrls,
         id: product._id,
       })
+      navigate("/")
     }
     if (!filesRef.current.files.length) {
       await updateProduct({
@@ -90,8 +91,9 @@ const EditProductForm = ({ product }) => {
         discount: Number(discount),
         id: product._id,
       })
+      navigate("/")
     }
-    navigate("/")
+    
   }
   let loader
 
