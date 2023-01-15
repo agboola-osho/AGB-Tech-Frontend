@@ -76,7 +76,10 @@ export const productApiSlice = apiSlice.injectEndpoints({
           ...Product,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg._id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Post", id: arg._id },
+        { type: "Products", id: "LIST" },
+      ],
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -87,6 +90,11 @@ export const productApiSlice = apiSlice.injectEndpoints({
         },
       }),
       invalidatesTags: [{ type: "Products", id: "LIST" }],
+    }),
+    searchProducts: builder.query({
+      query: (query) => ({
+        url: `/products/search/${query}`,
+      }),
     }),
   }),
 })
@@ -101,4 +109,5 @@ export const {
   useGetProductsByBrandQuery,
   useGetProductBrandsQuery,
   useGetProductCategoriesQuery,
+  useSearchProductsQuery,
 } = productApiSlice

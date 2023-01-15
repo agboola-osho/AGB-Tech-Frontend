@@ -23,6 +23,10 @@ const Header = ({ length }) => {
     sendLogout()
     navigate("login")
   }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    navigate(`searchResults/${search}`)
+  }
   return (
     <>
       <div className='head'>
@@ -122,13 +126,7 @@ const Header = ({ length }) => {
           </div>
         </div>
         <div className='search-bar'>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              navigate("/searchResults")
-            }}
-            className='search-form'
-          >
+          <form onSubmit={handleSubmit} className='search-form'>
             <label htmlFor='search' className='d-none'>
               Search
             </label>
@@ -161,13 +159,7 @@ const Header = ({ length }) => {
         </div>
       </div>
       <div className='small-search'>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            navigate("/searchResults")
-          }}
-          className='search-form'
-        >
+        <form onSubmit={handleSubmit} className='search-form'>
           <label htmlFor='small-search' className='d-none'>
             Search
           </label>

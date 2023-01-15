@@ -47,7 +47,9 @@ const Signup = () => {
       setEmail("")
       setPassword("")
       setName("")
-      navigate("/")
+      if (isSuccess) {
+        navigate("/")
+      }
     } catch (err) {
       toast.error(err.data.message, {
         position: "bottom-right",

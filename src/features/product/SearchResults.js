@@ -1,18 +1,24 @@
 import ResultItem from "./ResultItem"
 import Spinner from "../../components/Spinner"
-import { useGetProductsQuery } from "./productApiSlice"
+import { useSearchProductsQuery } from "./productApiSlice"
+import { useParams } from "react-router-dom"
 
 const SearchResults = () => {
+  const { query } = useParams()
   const {
     data: searchResults,
     isLoading,
     isError,
+    isFetching,
     error,
-  } = useGetProductsQuery()
+  } = useSearchProductsQuery(query)
   let content
-  if (isLoading) {
+  if (isLoading || isFetching) {
     content = <Spinner />
+  } else if (isError) {
+    content = <p className='error'>{error.data.message}</p>
   } else if (searchResults?.length) {
+    console.log(searchResults)
     content = (
       <>
         <h6 className='result-header'>RESULTS</h6>
@@ -23,8 +29,6 @@ const SearchResults = () => {
         </ul>
       </>
     )
-  } else if (isError) {
-    content = <p className='error'>{error.data.message}</p>
   }
   return content
 }

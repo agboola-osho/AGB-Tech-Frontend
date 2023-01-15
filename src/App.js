@@ -37,7 +37,7 @@ function App() {
           <Route path='contact' element={<Contact />} />
           <Route path='user' element={<User />} />
           <Route path='cart' element={<Cart />} />
-          <Route path='searchResults' element={<SearchResults />} />
+          <Route path='searchResults/:query' element={<SearchResults />} />
           <Route path='categories'>
             <Route path=':category' element={<Categories />} />
           </Route>
