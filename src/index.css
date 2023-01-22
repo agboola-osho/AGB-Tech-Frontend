@@ -491,6 +491,8 @@ header {
   background-color: red;
   color: white;
   border-radius: 10px;
+  white-space: nowrap;
+  padding: 5px;
 }
 .product-btn {
   display: flex;
