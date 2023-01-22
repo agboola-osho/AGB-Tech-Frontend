@@ -16,7 +16,7 @@ body {
   background-color: #f6f9fc;
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 /* Header */
