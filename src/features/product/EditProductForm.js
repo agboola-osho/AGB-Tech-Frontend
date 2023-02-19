@@ -1,51 +1,47 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import {
   ref,
   uploadBytes,
   getDownloadURL,
   deleteObject,
 } from "firebase/storage"
-import { toast, ToastContainer } from "react-toastify"
 import { useUpdateProductMutation } from "./productApiSlice"
 import { v4 } from "uuid"
+import { Modal } from "react-bootstrap"
 import { storage } from "../../config/firebase"
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify"
 
 const EditProductForm = ({ product }) => {
-  const [title, setTitle] = useState(product.title)
-  const [category, setCategory] = useState(product.category)
-  const [brand, setBrand] = useState(product.brand)
-  const [price, setPrice] = useState(product.price)
-  const [description, setDescription] = useState(product.description)
-  const [discount, setDiscount] = useState(product.discount)
+  const initialValues = {
+    category: product.category,
+    description: product.description,
+    title: product.title,
+    brand: product.brand,
+    price: product.price,
+    discount: product.discount,
+    id: product._id,
+  }
+  const [values, setValues] = useState(initialValues)
+  const [show, setShow] = useState(true)
   const filesRef = useRef()
   const [updateProduct, { isLoading }] = useUpdateProductMutation()
   const navigate = useNavigate()
-  const imageUrls = []
+
   const uploadImages = async () => {
     const images = filesRef.current.files
+    const promises = []
+
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `images/${images[i].name + v4()}`)
       const snapshot = await uploadBytes(imageRef, images[i])
       const url = await getDownloadURL(snapshot.ref)
-      console.log(url)
-      imageUrls.push(url)
+      promises.push(url)
     }
+
+    const urls = await Promise.all(promises)
+    return urls
   }
-  useEffect(() => {
-    toast.info(
-      "Adding images to the input field deletes all existing images attatched to this product",
-      {
-        position: "bottom-right",
-        autoClose: 20000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "light",
-      }
-    )
-  }, [])
 
   const deleteExistingImages = async () => {
     product.images.forEach(async (image) => {
@@ -54,56 +50,50 @@ const EditProductForm = ({ product }) => {
     })
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setValues({
+      ...values,
+      [name]: value,
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (
-      title === "" ||
-      description === "" ||
-      brand === "" ||
-      category === "" ||
-      price === "" ||
-      discount === ""
+      values.title === "" ||
+      values.description === "" ||
+      values.brand === "" ||
+      values.category === "" ||
+      values.price === "" ||
+      values.discount === ""
     ) {
       return
     }
-    if (filesRef.current.files.length) {
+    try {
       await deleteExistingImages()
-      await uploadImages()
-      await updateProduct({
-        title,
-        description,
-        brand,
-        category,
-        price: Number(price),
-        discount: Number(discount),
-        images: imageUrls,
-        id: product._id,
-      })
+      const images = await uploadImages()
+      await updateProduct({ ...values, images })
       navigate("/")
-    }
-    if (!filesRef.current.files.length) {
-      await updateProduct({
-        title,
-        description,
-        brand,
-        category,
-        price: Number(price),
-        discount: Number(discount),
-        id: product._id,
+    } catch (err) {
+      toast.error(err?.data?.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
       })
-      navigate("/")
     }
-    
   }
-  let loader
-
-  if (isLoading) {
-    ;<span
+  let loader = (
+    <span
       className='spinner-border spinner-border-sm'
       role='status'
       aria-hidden='true'
     ></span>
-  }
+  )
   return (
     <main className='product-form-page'>
       <article className='product-form-container'>
@@ -118,6 +108,7 @@ const EditProductForm = ({ product }) => {
                 name='images'
                 id='images'
                 multiple
+                accept='image/*'
                 ref={filesRef}
               />
             </div>
@@ -130,8 +121,8 @@ const EditProductForm = ({ product }) => {
                 name='title'
                 id='title'
                 placeholder='iPhone 14'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={values.title}
+                onChange={handleInputChange}
               />
             </div>
             <div className=' product-properties'>
@@ -143,8 +134,8 @@ const EditProductForm = ({ product }) => {
                 name='category'
                 id='category'
                 placeholder='Phones'
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={values.category}
+                onChange={handleInputChange}
               />
             </div>
             <div className=' product-properties'>
@@ -156,8 +147,8 @@ const EditProductForm = ({ product }) => {
                 name='brand'
                 id='brand'
                 placeholder='Apple'
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
+                value={values.brand}
+                onChange={handleInputChange}
               />
             </div>
             <div className=' product-properties'>
@@ -169,8 +160,8 @@ const EditProductForm = ({ product }) => {
                 name='price'
                 id='price'
                 placeholder='14'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={values.price}
+                onChange={handleInputChange}
               />
             </div>
             <div className=' product-properties'>
@@ -182,8 +173,8 @@ const EditProductForm = ({ product }) => {
                 name='discount'
                 id='discount'
                 placeholder='10'
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
+                value={values.discount}
+                onChange={handleInputChange}
               />
             </div>
           </div>
@@ -195,25 +186,30 @@ const EditProductForm = ({ product }) => {
               name='description'
               id='description'
               placeholder='The best iPhone yet'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={values.description}
+              onChange={handleInputChange}
             />
           </div>
-          <button className='product-form-btn'>{loader} Update Product</button>
+          <button className='product-form-btn'>
+            {isLoading ? loader : "Update Product"}
+          </button>
         </form>
       </article>
-      <ToastContainer
-        position='bottom-right'
-        autoClose={20000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
+      <Modal show={show} onHide={() => setShow(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning!!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Adding images to the input field deletes all existing images attatched
+          to this product
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={() => setShow(false)} className='product-form-btn'>
+            Got it!
+          </button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer />
     </main>
   )
 }

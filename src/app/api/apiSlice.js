@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { setToken } from "../../features/auth/authSlice"
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://agb-tech-api.onrender.com",
+  baseUrl: "http://localhost:3500",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
@@ -16,15 +16,13 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
+  if (result?.error?.originalStatus === 403 || result?.error?.status === 403) {
+    console.log("sending refresh token")
 
-  if (result?.error?.status === 403) {
     const refreshResult = await baseQuery("/auth/refresh", api, extraOptions)
-
     if (refreshResult?.data) {
-      // store the new token
-      api.dispatch(setToken({ ...refreshResult.data }))
+      api.dispatch(setToken(refreshResult.data.accessToken))
 
-      // retry original query with new access token
       result = await baseQuery(args, api, extraOptions)
     } else {
       if (refreshResult?.error?.status === 403) {

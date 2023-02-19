@@ -4,23 +4,26 @@ import Spinner from "../../components/Spinner"
 import Carousel from "react-bootstrap/Carousel"
 import {
   useDeleteProductMutation,
-  useGetProductByIdQuery,
+  useGetProductsQuery,
 } from "./productApiSlice"
+import { Icon } from "@iconify/react"
 import { useAddToCartMutation } from "../cart/cartApiSlice"
 import useAuth from "../../hooks/useAuth"
 import { storage } from "../../config/firebase"
 import { ref, deleteObject } from "firebase/storage"
+import Reviews from "../reviews/Reviews"
+import { ToastContainer, toast } from "react-toastify"
+import AddReviews from "../reviews/AddReview"
 
 const Product = () => {
-  const { isAdmin } = useAuth()
+  const { isAdmin, isGuest } = useAuth()
   const { id } = useParams()
-  const {
-    data: product,
-    isLoading,
-    error,
-    isError,
-    isFetching,
-  } = useGetProductByIdQuery(id)
+  const { product, isLoading, error, isError, isFetching } =
+    useGetProductsQuery(undefined, {
+      selectFromResult: ({ data }) => ({
+        product: data?.find((product) => product._id === id),
+      }),
+    })
   const [deleteProductById] = useDeleteProductMutation()
   const [addToCart] = useAddToCartMutation()
   const navigate = useNavigate()
@@ -35,16 +38,31 @@ const Product = () => {
     await deleteProductById(id)
     navigate("/")
   }
+  const addItem = async () => {
+    const response = await addToCart({
+      quantity: 1,
+      product: product._id,
+    })
+    toast.success(response?.data?.message, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+    })
+  }
   let privateBtns
   if (isAdmin) {
     privateBtns = (
       <>
-        <button className='add-cart'>
+        <button className='product-btn'>
           <Link to={`/admin/editProduct/${id}`} className='white-link'>
             Edit Product
           </Link>
         </button>
-        <button className='add-cart' onClick={deleteProduct}>
+        <button className='product-btn' onClick={deleteProduct}>
           Delete Product
         </button>
       </>
@@ -58,46 +76,51 @@ const Product = () => {
   } else if (product) {
     content = (
       <main className='product-page'>
-        <Carousel className='product-img'>
-          {product.images.map((image) => (
-            <Carousel.Item
-              className='product-carousel'
-              key={product.images.indexOf(image)}
-            >
-              <img
-                src={image}
-                alt={product.title}
-                className='product-image'
+        <section className='product'>
+          <Carousel className='product-img'>
+            {product.images.map((image) => (
+              <Carousel.Item
+                className='product-carousel'
                 key={product.images.indexOf(image)}
-              />
-            </Carousel.Item>
-          ))}
-        </Carousel>
+              >
+                <img
+                  src={image}
+                  alt={product.title}
+                  className='product-image'
+                  key={product.images.indexOf(image)}
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
 
-        <div className='product-text'>
-          <p className='product-category'>{product.category.toUpperCase()}</p>
-          <p className='product-name'>{product.title}</p>
-          <p className='product-rating'>⭐⭐⭐⭐⭐</p>
-          <p className='product-price'>${product.price}</p>
-          <p className='product-description'>{product.description}</p>
-          <div className='product-btn'>
-            <button
-              className='add-cart'
-              onClick={() =>
-                addToCart({
-                  image: product.images[0],
-                  title: product.title,
-                  quantity: 1,
-                  price: product.price,
-                  source: product._id,
-                })
-              }
-            >
-              Add to cart
-            </button>
-            {privateBtns}
+          <div className='product-text'>
+            <p className='product-category'>{product.category.toUpperCase()}</p>
+            <p className='product-name'>{product.title}</p>
+            <p className='product-rating'>
+              <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+              <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+              <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+              <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+              <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+            </p>
+            <p className='product-price'>${product.price}</p>
+            <p className='product-description'>{product.description}</p>
+            <div className='product-btns'>
+              <button className='product-btn' onClick={addItem}>
+                Add to cart
+              </button>
+              {privateBtns}
+            </div>
           </div>
-        </div>
+        </section>
+        <hr />
+        <section className='reviews-section'>
+          <h1 className='reviews-header'>Reviews</h1>
+          {isGuest ? null : <AddReviews productId={id} />}
+
+          <Reviews productId={id} />
+        </section>
+        <ToastContainer />
       </main>
     )
   } else if (!product) {

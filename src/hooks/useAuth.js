@@ -10,14 +10,14 @@ const useAuth = () => {
 
   if (token) {
     const decoded = jwtDecode(token)
-    const { role, name } = decoded.UserInfo
+    const { role, name, user } = decoded.UserInfo
     if (role === 1960) isAdmin = true
     if (role === 2009) isUser = true
     isGuest = false
 
-    return { isAdmin, isGuest, isUser, name }
+    return { isAdmin, isGuest, isUser, name, user }
   }
 
-  return { isAdmin, isGuest, isUser, name: "" }
+  return { isAdmin, isGuest, isUser, name: "", user: "" }
 }
 export default useAuth

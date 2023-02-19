@@ -3,11 +3,8 @@ import { apiSlice } from "../../app/api/apiSlice"
 export const reviewsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getReviews: builder.query({
-      query: ({ productId }) => ({
-        url: "/products/reviews",
-        body: {
-          productId,
-        },
+      query: (productId) => ({
+        url: `/products/reviews/${productId}`,
       }),
       providesTags: (result) =>
         result
@@ -25,7 +22,7 @@ export const reviewsApiSlice = apiSlice.injectEndpoints({
           ...body,
         },
       }),
-      invalidatesTags: [{ type: "Cart", id: "LIST" }],
+      invalidatesTags: [{ type: "Reviews", id: "LIST" }],
     }),
     editReview: builder.mutation({
       query: (body) => ({
@@ -35,7 +32,9 @@ export const reviewsApiSlice = apiSlice.injectEndpoints({
           ...body,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Cart", id: arg._id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Reviews", id: arg._id },
+      ],
     }),
     deleteReview: builder.mutation({
       query: (body) => ({
@@ -45,7 +44,9 @@ export const reviewsApiSlice = apiSlice.injectEndpoints({
           ...body,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Cart", id: arg._id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Reviews", id: arg._id },
+      ],
     }),
   }),
 })

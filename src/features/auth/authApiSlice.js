@@ -54,6 +54,41 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    sendEmail: builder.mutation({
+      query: (details) => ({
+        url: "/auth/email",
+        method: "POST",
+        body: {
+          ...details,
+        },
+      }),
+    }),
+    verifyEmail: builder.mutation({
+      query: (token) => ({
+        url: "/auth/verifyEmail",
+        method: "PATCH",
+        body: {
+          token,
+        },
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: "/auth/resetPwd",
+        method: "PATCH",
+        body: {
+          ...body,
+        },
+      }),
+    }),
+    getUser: builder.query({
+      query: () => ({
+        url: "/auth/user",
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError
+        },
+      }),
+    }),
   }),
 })
 
@@ -61,5 +96,9 @@ export const {
   useLoginMutation,
   useRefreshMutation,
   useSendLogoutMutation,
+  useSendEmailMutation,
   useSignupMutation,
+  useResetPasswordMutation,
+  useVerifyEmailMutation,
+  useGetUserQuery,
 } = authApiSlice

@@ -1,10 +1,11 @@
 import ResultItem from "./ResultItem"
 import Spinner from "../../components/Spinner"
 import { useSearchProductsQuery } from "./productApiSlice"
-import { useParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 
 const SearchResults = () => {
-  const { query } = useParams()
+  const [searchParams] = useSearchParams()
+  const query = searchParams.get("q")
   const {
     data: searchResults,
     isLoading,

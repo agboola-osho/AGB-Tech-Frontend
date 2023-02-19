@@ -1,11 +1,12 @@
 import Logo from "../../assets/Logo.png"
 import { useRef, useState, useEffect } from "react"
-import { useLoginMutation } from "./authApiSlice"
+import { useLoginMutation, useSendEmailMutation } from "./authApiSlice"
+import { setEmailDetails } from "./authSlice"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { setToken } from "./authSlice"
 import { toast, ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import Loader from "../../components/Loader"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -13,28 +14,19 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
   const inputRef = useRef()
   const dispatch = useDispatch()
+  const [sendEmail, { isLoading: sending }] = useSendEmailMutation()
   const navigate = useNavigate()
   useEffect(() => {
     inputRef.current.focus()
   }, [])
   let allowSubmit = false
-  let loader
   if (email === "" || password === "") {
     allowSubmit = false
   } else {
     allowSubmit = true
   }
-  if (isLoading) {
-    loader = (
-      <span
-        className='spinner-border spinner-border-sm'
-        role='status'
-        aria-hidden='true'
-      ></span>
-    )
-  }
   const tryOut = async () => {
-    setEmail("guest@something.com")
+    setEmail("guestuser@something.com")
     setPassword("123456789")
   }
   const handleSubmit = async (e) => {
@@ -47,15 +39,32 @@ const Login = () => {
         setPassword("")
         navigate("/")
       } catch (err) {
-        toast.error(err.data.message, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "light",
-        })
+        if (err.data.message === "Verify Your email") {
+          const emailDetails = {
+            btnContent: "Verify Your Email",
+            message1: "You recently created an AGB Tech account",
+            message2:
+              "Verify your email by clicking  this button, the link will expire in 15 minutes so use it as fast asyou can",
+            title: "Verify Your Email",
+            header: "Verify Your Email",
+            email,
+            operation: "verifyEmail",
+          }
+
+          await sendEmail(emailDetails).unwrap()
+          dispatch(setEmailDetails(emailDetails))
+          navigate("/emailSent")
+        } else {
+          toast.error(err?.data?.message, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "light",
+          })
+        }
       }
     }
   }
@@ -88,23 +97,15 @@ const Login = () => {
           />
         </div>
         <button className='form-submit' disabled={!allowSubmit}>
-          {loader} Login
+          {isLoading || sending ? <Loader /> : "Login"}
         </button>
-        <button onClick={tryOut}>Try it out (as an admin)</button>
+        <button onClick={tryOut} className='form-submit'>
+          Try it out (as an admin)
+        </button>
       </form>
       <Link to='/signup'>Don't have an account? Signup</Link>
-      <ToastContainer
-        position='bottom-right'
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
+      <Link to='/resetPassword'>Forgot Password</Link>
+      <ToastContainer />
     </main>
   )
 }
