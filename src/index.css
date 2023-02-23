@@ -82,7 +82,6 @@ header {
 .autocomplete-item {
   border-radius: 5px;
   font-size: large;
-  color: black;
 }
 .autocomplete-item:hover {
   background-color: #f6f9fc;
@@ -1265,8 +1264,6 @@ input::-webkit-inner-spin-button {
   } 
   .product-btns {
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
   }
 }
 @media (min-width: 1200px) {
