@@ -50,7 +50,7 @@ const SingleReview = ({ review, productId }) => {
             : review.sender.name}
         </p>
         <p className='review-date'>{time + " ago"}</p>
-        {user === review.sender || isAdmin === true ? (
+        {user === review.sender._id || isAdmin === true ? (
           <>
             <button
               className='review-menu-btn'
