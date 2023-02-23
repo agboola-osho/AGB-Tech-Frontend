@@ -1264,6 +1264,8 @@ input::-webkit-inner-spin-button {
   } 
   .product-btns {
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
   }
 }
 @media (min-width: 1200px) {
