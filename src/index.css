@@ -82,6 +82,7 @@ header {
 .autocomplete-item {
   border-radius: 5px;
   font-size: large;
+  color: black;
 }
 .autocomplete-item:hover {
   background-color: #f6f9fc;
