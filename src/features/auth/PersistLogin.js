@@ -34,7 +34,7 @@ const PersistLogin = () => {
 
   let content
   if (isLoading) {
-    content = <Spinner />
+    content = <Outlet />
   } else if (isError) {
     content = <Navigate to='/login' state={{ from: location }} replace />
   } else if (isSuccess && trueSuccess) {
