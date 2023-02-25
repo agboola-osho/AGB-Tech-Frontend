@@ -71,8 +71,8 @@ const EditProductForm = ({ product }) => {
       return
     }
     try {
-      await deleteExistingImages()
       const images = await uploadImages()
+      if(images?.length) await deleteExistingImages()
       await updateProduct({ ...values, images })
       navigate("/")
     } catch (err) {
