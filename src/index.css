@@ -1272,8 +1272,3 @@ input::-webkit-inner-spin-button {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-@media (max-width: 400px) {
-  .product-text {
-    padding-left: 30px;
-  }
-}
