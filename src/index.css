@@ -1218,7 +1218,6 @@ input::-webkit-inner-spin-button {
     grid-template-columns: repeat(1, 1fr);
   }
   .product-text {
-    width: 24rem;
     display: flex;
     align-content: center;
     
