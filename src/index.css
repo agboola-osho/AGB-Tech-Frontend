@@ -878,10 +878,6 @@ input::-webkit-inner-spin-button {
   background-color: red;
 }
 
-.add-review-btn:disabled {
-  background-color: rgb(226, 84, 84);
-}
-
 .add-review {
   border: 1px solid rgb(172, 167, 167);
   border-radius: 50px;
@@ -964,7 +960,7 @@ input::-webkit-inner-spin-button {
 .review-dropdown {
   animation: var(--animation-fade-in);
   animation-timing-function: var(--ease-squish-3);
-  animation-duration: 1s;
+  animation-duration: 2s;
 }
 .reviews-modal-btn {
   background-color: #ff0000;
