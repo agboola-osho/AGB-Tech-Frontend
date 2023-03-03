@@ -962,8 +962,9 @@ input::-webkit-inner-spin-button {
 }
 
 .review-dropdown {
-  animation:
-      var(--animation-fade-in),
+  animation: var(--animation-fade-in);
+  animation-timing-function: var(--ease-squish-3);
+  animation-duration: 1s;
 }
 .reviews-modal-btn {
   background-color: #ff0000;
