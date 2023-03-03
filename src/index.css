@@ -963,8 +963,7 @@ input::-webkit-inner-spin-button {
 
 .review-dropdown {
   animation:
-      var(--animation-fade-in) forwards,
-      var(--animation-slide-in-up);
+      var(--animation-fade-in),
 }
 .reviews-modal-btn {
   background-color: #ff0000;
