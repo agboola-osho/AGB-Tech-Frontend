@@ -959,7 +959,7 @@ input::-webkit-inner-spin-button {
 
 .review-dropdown {
   animation: var(--animation-fade-in) forwards,
-    var(--animation-slide-out-down);;
+    var(--animation-slide-in-up);
   animation-timing-function: var(--ease-squish-3);
   animation-duration: 2s;
 }
