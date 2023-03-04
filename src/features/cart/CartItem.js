@@ -45,7 +45,7 @@ const CartItem = ({ item }) => {
           <p className='cart-price'>${item.product.price}</p>
         </div>
       </Link>
-      <form className='cart-qty-form' onSubmit={updateQty} id='qty-form'>
+      <form className='cart-qty-form' onSubmit={updateQty}>
         <input
           type='number'
           maxLength='3'
@@ -59,8 +59,6 @@ const CartItem = ({ item }) => {
           <button
             className='cart-qty-update'
             type='submit'
-            form='qty-form'
-            onClick={() => console.log("some")}
           >
             Update
           </button>
