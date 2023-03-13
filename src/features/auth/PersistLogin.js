@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation } from "react-router-dom"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from "react-redux"
 import { selectCurrentToken } from "./authSlice"
@@ -9,7 +9,6 @@ const PersistLogin = () => {
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
   const location = useLocation()
-  const [trueSuccess, setTrueSuccess] = useState(false)
 
   const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
     useRefreshMutation()
