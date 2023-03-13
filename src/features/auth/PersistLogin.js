@@ -35,7 +35,7 @@ const PersistLogin = () => {
     content = <Spinner />
   } else if (isError) {
     content = <Navigate to='/login' state={{ from: location }} replace />
-  } else if (isSuccess && trueSuccess) {
+  } else if (isSuccess) {
     content = <Outlet />
   } else if (token && isUninitialized) {
     content = <Outlet />
