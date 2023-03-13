@@ -17,13 +17,12 @@ const PersistLogin = () => {
   useEffect(() => {
     if (effectRan.current === true || process.env.NODE_ENV !== "development") {
       const verifyRefreshToken = async () => {
-        console.log("verifying refresh token")
-        const response = await refresh()
-        if (response.error) {
-          const error = response.error
-          console.log(error)
+        try{
+          await refresh().unwrap()
+        } catch (err){
+          content = <Navigate to='/login' state={{ from: location }} replace />
         }
-        setTrueSuccess(true)
+        
       }
 
       if (!token) verifyRefreshToken()
