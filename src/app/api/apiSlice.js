@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { setToken } from "../../features/auth/authSlice"
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://agb-tech-api.onrender.com",
+  baseUrl: "https://agb-tech-api.up.railway.app",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
