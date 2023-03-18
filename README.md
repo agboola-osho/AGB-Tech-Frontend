@@ -1,3 +1,3 @@
 # AGB-Tech-Frontend
 Hi my name is Abdulrahman Agboola-osho, I am a 13 year old software engineer.
-This website is an online tech shop for a fake company AGB Tech you can run the code using npm start or you can visit https://agb-tech.onrender.com to use the website
+This website is an online tech shop for a fake company AGB Tech you can run the code using npm start or you can visit https://agb-tech.vercel.app to use the website
