@@ -1,9 +1,10 @@
 import { useGetReviewsQuery } from "./reviewsApiSlice"
 import SingleReview from "./SingleReview"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 const Reviews = ({ productId }) => {
   const { data: reviews, isError, error } = useGetReviewsQuery(productId)
-
+  const [parent] = useAutoAnimate()
   let content
 
   if (isError) {
@@ -13,9 +14,8 @@ const Reviews = ({ productId }) => {
       .slice()
       .sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt))
       .reverse()
-    console.log(sortedReviews)
     content = (
-      <article className='reviews-container'>
+      <article className='reviews-container' ref={parent}>
         {sortedReviews.map((review) => (
           <SingleReview
             review={review}

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import SmallSearch from "./SmallSearch"
 import Nav from "./Offcanvas"
 import AutoComplete from "./AutoComplete"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 const Header = ({ length }) => {
   const navigate = useNavigate()
@@ -18,6 +19,7 @@ const Header = ({ length }) => {
     e.preventDefault()
     navigate(`search?q=${search}`)
   }
+  const [animate] = useAutoAnimate()
   const { data: products } = useGetProductsQuery()
   useEffect(() => {
     if (products?.length && search !== "") {
@@ -49,7 +51,7 @@ const Header = ({ length }) => {
             </Link>
           </div>
         </div>
-        <div className='search'>
+        <div className='search' ref={animate}>
           <div className='search-bar'>
             <form onSubmit={handleSubmit} className='search-form'>
               <label htmlFor='search' className='d-none'>

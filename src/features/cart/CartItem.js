@@ -12,7 +12,6 @@ const CartItem = ({ item }) => {
   const { width } = useWindowSize()
   const updateQty = async (e) => {
     e.preventDefault()
-    console.log("updating")
     await editQty({
       id: item._id,
       newQty: Number(quantity),
@@ -56,10 +55,7 @@ const CartItem = ({ item }) => {
           onFocus={() => setUpdateBtnVisible(true)}
         />
         {updateBtnVisible && (
-          <button
-            className='cart-qty-update'
-            type='submit'
-          >
+          <button className='cart-qty-update' type='submit'>
             Update
           </button>
         )}

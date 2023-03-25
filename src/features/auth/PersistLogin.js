@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation } from "react-router-dom"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from "react-redux"
 import { selectCurrentToken } from "./authSlice"
@@ -9,6 +9,7 @@ const PersistLogin = () => {
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
   const location = useLocation()
+  const [trueSuccess, setTrueSuccess] = useState(false)
 
   const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
     useRefreshMutation()
@@ -16,12 +17,10 @@ const PersistLogin = () => {
   useEffect(() => {
     if (effectRan.current === true || process.env.NODE_ENV !== "development") {
       const verifyRefreshToken = async () => {
-        try{
+        try {
           await refresh().unwrap()
-        } catch (err){
-          content = <Navigate to='/login' state={{ from: location }} replace />
-        }
-        
+          setTrueSuccess(true)
+        } catch (error) {}
       }
 
       if (!token) verifyRefreshToken()
@@ -35,7 +34,7 @@ const PersistLogin = () => {
     content = <Spinner />
   } else if (isError) {
     content = <Navigate to='/login' state={{ from: location }} replace />
-  } else if (isSuccess) {
+  } else if (isSuccess && trueSuccess) {
     content = <Outlet />
   } else if (token && isUninitialized) {
     content = <Outlet />
