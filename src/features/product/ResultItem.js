@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { Icon } from "@iconify/react"
 
 const ResultItem = ({ product }) => {
   return (
@@ -10,7 +11,13 @@ const ResultItem = ({ product }) => {
             <img src={product.images[0]} alt='img' />
           </div>
           <p className='result-title'>{product.title}</p>
-          <p className='result-rating'>⭐⭐⭐⭐⭐</p>
+          <p className='result-rating'>
+            <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+            <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+            <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+            <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+            <Icon icon='ic:round-star-rate' color='#FFEE58' width='30' />
+          </p>
           <p className='result-price'>{product.price}</p>
         </li>
       </Link>

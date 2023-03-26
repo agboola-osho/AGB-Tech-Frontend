@@ -36,99 +36,102 @@ const Nav = ({ show, setShow }) => {
           <img src={Logo} alt='logo' className='logo' />
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body>
-        <ul className='offcanvas-list'>
-          <Link className='dark-link' to='/'>
-            <li className='offcanvas-item'>Home</li>
+      <Offcanvas.Body className='offcanvas-list'>
+        <Link className='offcanvas-item dark-link' to='/'>
+          Home
+        </Link>
+        <Link className='offcanvas-item dark-link' to='contact'>
+          Contact
+        </Link>
+        {isGuest ? (
+          <Link className='offcanvas-item dark-link' to='login'>
+            Login
           </Link>
-          <Link className='dark-link' to='contact'>
-            <li className='offcanvas-item'>Contact</li>
-          </Link>
-          {isGuest ? (
-            <Link className='dark-link' to='login'>
-              <li className='offcanvas-item'>Login</li>
-            </Link>
+        ) : (
+          <button className='offcanvas-item' onClick={logout}>
+            Logout
+          </button>
+        )}
+        <button
+          className='offcanvas-item'
+          onClick={() => setCategoriesVisible(!categoriesVisible)}
+          aria-expanded={categoriesVisible}
+          aria-controls='categories'
+        >
+          <span>Categories</span>
+          {categoriesVisible ? (
+            <span>
+              <Icon
+                icon='ic:round-keyboard-arrow-up'
+                className='dropdown-icon'
+              />
+            </span>
           ) : (
-            <button className='offcanvas-btn' onClick={logout}>
-              <li className='offcanvas-item'>Logout</li>
-            </button>
+            <span>
+              <Icon
+                icon='ic:round-keyboard-arrow-down'
+                className='dropdown-icon'
+              />
+            </span>
           )}
-          <li className='offcanvas-item'>
-            <button
-              className='offcanvas-btn'
-              onClick={() => setCategoriesVisible(!categoriesVisible)}
-              aria-expanded={categoriesVisible}
-              aria-controls='categories'
-            >
-              <span>Categories</span>
-              {categoriesVisible ? (
-                <Icon
-                  icon='ic:round-keyboard-arrow-up'
-                  className='dropdown-icon'
-                />
-              ) : (
-                <Icon
-                  icon='ic:round-keyboard-arrow-down'
-                  className='dropdown-icon'
-                />
-              )}
-            </button>
-          </li>
-          <Collapse in={categoriesVisible}>
-            {categories?.length ? (
-              <ul>
-                {categories.map((category) => (
-                  <Link
-                    className='dark-link'
-                    to={`/categories/${category}`}
-                    key={category}
-                  >
-                    <li className='offcanvas-sub-item'>{category}</li>
-                  </Link>
-                ))}
-              </ul>
-            ) : (
-              <p>Nothing to show here</p>
-            )}
-          </Collapse>
+        </button>
+        <Collapse in={categoriesVisible}>
+          {categories?.length ? (
+            <div className='offcanvas-collapse'>
+              {categories.map((category) => (
+                <Link
+                  className='dark-link offcanvas-sub-item'
+                  to={`/categories/${category}`}
+                  key={category}
+                >
+                  {category}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p>Nothing to show here</p>
+          )}
+        </Collapse>
 
-          <li className='offcanvas-item'>
-            <button
-              className='offcanvas-btn'
-              onClick={() => setBrandsVisible(!brandsVisible)}
-            >
-              <span>Brands</span>
-              {brandsVisible ? (
-                <Icon
-                  icon='ic:round-keyboard-arrow-up'
-                  className='dropdown-icon'
-                />
-              ) : (
-                <Icon
-                  icon='ic:round-keyboard-arrow-down'
-                  className='dropdown-icon'
-                />
-              )}
-            </button>
-          </li>
-          <Collapse in={brandsVisible}>
-            {brands?.length ? (
-              <ul>
-                {brands.map((brand) => (
-                  <Link
-                    className='dark-link'
-                    to={`/brands/${brand}`}
-                    key={brand}
-                  >
-                    <li className='offcanvas-sub-item'>{brand}</li>
-                  </Link>
-                ))}
-              </ul>
-            ) : (
-              <p>Nothing to show here</p>
-            )}
-          </Collapse>
-        </ul>
+        <button
+          className='offcanvas-item'
+          onClick={() => setBrandsVisible(!brandsVisible)}
+        >
+          <span>Brands</span>
+          {brandsVisible ? (
+            <span>
+              <Icon
+                icon='ic:round-keyboard-arrow-up'
+                className='dropdown-icon'
+              />
+            </span>
+          ) : (
+            <span>
+              <Icon
+                icon='ic:round-keyboard-arrow-down'
+                className='dropdown-icon'
+              />
+            </span>
+          )}
+        </button>
+
+        <Collapse in={brandsVisible}>
+          {brands?.length ? (
+            <div className='offcanvas-collapse'>
+              {brands.map((brand) => (
+                <Link
+                  className='dark-link offcanvas-sub-item'
+                  to={`/brands/${brand}`}
+                  key={brand}
+                >
+                  {brand}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p>Nothing to show here</p>
+          )}
+        </Collapse>
       </Offcanvas.Body>
     </Offcanvas>
   )

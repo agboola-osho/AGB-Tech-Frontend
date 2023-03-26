@@ -9,18 +9,19 @@ import { useState } from "react"
 import useAuth from "../../hooks/useAuth"
 
 const SingleReview = ({ review, productId }) => {
-  const [show, setShow] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false)
   const [editInput, setEditInput] = useState("")
   const time = formatDistanceToNowStrict(new Date(review.updatedAt))
   const { user, isAdmin } = useAuth()
   const [deleteReview] = useDeleteReviewMutation()
   const [editReview] = useEditReviewMutation()
   const startEditing = () => {
-    setShow(true)
+    setShowModal(true)
     setEditInput(review.content)
   }
   const handleClose = () => {
-    setShow(false)
+    setShowModal(false)
   }
 
   const handleUpdate = async () => {
@@ -30,7 +31,7 @@ const SingleReview = ({ review, productId }) => {
       content: editInput,
     })
     setEditInput("")
-    setShow(false)
+    setShowModal(false)
   }
 
   const handleDelete = async () => {
@@ -96,7 +97,7 @@ const SingleReview = ({ review, productId }) => {
         ) : null}
       </div>
       <p className='review-content'>{review.content}</p>
-      <Modal show={show} onHide={() => setShow(false)} centered>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Editing</Modal.Title>
         </Modal.Header>

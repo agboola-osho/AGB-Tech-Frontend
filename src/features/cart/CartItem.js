@@ -33,12 +33,12 @@ const CartItem = ({ item }) => {
 
         <div className='cart-text'>
           <p className='cart-title'>
-            {width < 768
-              ? `${item.product.title.slice(0, 10)}..`
+            {width < 576
+              ? `${item.product.title.slice(0, 5)}...`
+              : width < 768
+              ? `${item.product.title.slice(0, 9)}..`
               : width < 992
               ? `${item.product.title.slice(0, 15)}...`
-              : width < 576
-              ? `${item.product.title.slice(0, 5)}...`
               : item.product.title}
           </p>
           <p className='cart-price'>${item.product.price}</p>
