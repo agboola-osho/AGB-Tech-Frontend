@@ -36,8 +36,9 @@ const Nav = ({ show, setShow }) => {
           <img src={Logo} alt='logo' className='logo' />
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body className='offcanvas-list'>
-        <Link className='offcanvas-item dark-link' to='/'>
+      <Offcanvas.Body onClick={handleClose}>
+        <div className='offcanvas-list'>
+          <Link className='offcanvas-item dark-link' to='/'>
           Home
         </Link>
         <Link className='offcanvas-item dark-link' to='contact'>
@@ -132,6 +133,7 @@ const Nav = ({ show, setShow }) => {
             <p>Nothing to show here</p>
           )}
         </Collapse>
+        </div>
       </Offcanvas.Body>
     </Offcanvas>
   )
