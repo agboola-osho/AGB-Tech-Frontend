@@ -104,7 +104,7 @@ const Nav = ({ show, setShow }) => {
 
         <button
           className='offcanvas-item'
-          onClick={toggleBrandsVisible}
+          onClick={handleToggleBrands}
         >
           <span>Brands</span>
           {brandsVisible ? (
