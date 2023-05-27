@@ -29,6 +29,14 @@ const Nav = ({ show, setShow }) => {
     setBrandsVisible(false)
     setShow(false)
   }
+  const handleToggleCategories = (e) => {
+    e.stopPropagation()
+    setCategoriesVisible(!categoriesVisisble)
+  }
+  const handleToggleBrands = (e) => {
+    e.stopPropagation()
+    setBrandsVisible(!brandsVisible)
+  }
   return (
     <Offcanvas show={show} onHide={handleClose}>
       <Offcanvas.Header closeButton>
@@ -55,7 +63,7 @@ const Nav = ({ show, setShow }) => {
         )}
         <button
           className='offcanvas-item'
-          onClick={() => setCategoriesVisible(!categoriesVisible)}
+          onClick={handleToggleCategories}
           aria-expanded={categoriesVisible}
           aria-controls='categories'
         >
@@ -96,7 +104,7 @@ const Nav = ({ show, setShow }) => {
 
         <button
           className='offcanvas-item'
-          onClick={() => setBrandsVisible(!brandsVisible)}
+          onClick={toggleBrandsVisible}
         >
           <span>Brands</span>
           {brandsVisible ? (
