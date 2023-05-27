@@ -31,7 +31,7 @@ const Nav = ({ show, setShow }) => {
   }
   const handleToggleCategories = (e) => {
     e.stopPropagation()
-    setCategoriesVisible(!categoriesVisisble)
+    setCategoriesVisible(!categoriesVisible)
   }
   const handleToggleBrands = (e) => {
     e.stopPropagation()
