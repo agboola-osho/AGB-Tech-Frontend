@@ -27,7 +27,7 @@ const Login = () => {
   }
   const tryOut = async () => {
     setEmail("guestuser@something.com")
-    setPassword("123456789")
+    setPassword("agb24789")
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
